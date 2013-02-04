@@ -1,4 +1,5 @@
-# Xymon
+RubyXymon [![Build Status](https://travis-ci.org/rubyisbeautiful/ruby_xymon.png)](https://travis-ci.org/rubyisbeautiful/ruby_xymon)
+========
 
 A simple gem for Xymon
 
