@@ -21,7 +21,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In its current state, the gem is simple to use.  You can set two configuration variables, host and port, like this:
+>> RubyXymon.config[:host] = 'localhost'
+>> RubyXymon.config[:port] = '1984'
+The values in the example are the defaults.
+You can also set the configuration at once, using either a Hash or a String, which points to a file:
+>> RubyXymon.config = { :host => 'localhost' }
+>> RubyXymon.config = "/some/dir/xymon.yml"
+
+You can send a raw Xymon message using the send method:
+>> RubyXymon.send("status www.http green `date` Web OK")
+
+For more information on Xymon, see the [![Xymon man page](http://www.xymon.com/xymon/help/manpages/man1/xymon.1.html#lbAF)]
+
+
+##
+
+Future improvements:
+* methods based on Xymon messages.  Each message has its own syntax, e.g. RubyXymon.status(lifetime, group, hostname, testname, color, txt)
+* methods to read from Xymon, e.g. "query" message
+
 
 ## Contributing
 

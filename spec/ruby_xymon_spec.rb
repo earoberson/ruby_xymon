@@ -52,19 +52,19 @@ describe "RubyXymon" do
 
   describe 'config=' do
 
-    it 'should accept a hash and set it' do
-      RubyXymon.config = { :foo => 'bar' }
+    it 'should accept a hash and merge it to defaults' do
+      RubyXymon.config = { :host => 'foo' }
 
-      RubyXymon.config.should == { :foo => 'bar' }
+      RubyXymon.config.should == { :host => 'foo', :port => '1984' }
     end
 
 
-    it 'should accept a YAML file and set it' do
-      YAML.should_receive(:load_file).with('some_file').and_return('foo')
+    it 'should accept a YAML file and merge it to defaults' do
+      YAML.should_receive(:load_file).with('some_file').and_return({ :host => 'foo' })
 
       RubyXymon.config = 'some_file'
 
-      RubyXymon.config.should == 'foo'
+      RubyXymon.config.should == { :host => 'foo', :port => '1984' }
     end
 
   end

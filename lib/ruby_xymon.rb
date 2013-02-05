@@ -3,6 +3,7 @@ require 'socket'
 
 module RubyXymon
 
+
   def self.send(msg, this_host=nil, this_port=nil)
     host = this_host.nil? ? self.config[:host] : this_host
     port = this_port.nil? ? self.config[:port] : this_port
@@ -22,11 +23,11 @@ module RubyXymon
 
     case hash_or_yml_file
       when Hash
-        @_xymon_config = hash_or_yml_file
+        @_xymon_config = default_config.merge(hash_or_yml_file)
       when String
-        @_xymon_config = YAML.load_file(hash_or_yml_file)
+        @_xymon_config = default_config.merge(YAML.load_file(hash_or_yml_file))
       else
-        raise "config takes either a Hash type object or an IO type object that contains YAML"
+        raise ArgumentError.new("config takes either a Hash type object or a filename pointing to a YAML")
     end
 
   end
