@@ -4,7 +4,7 @@ require 'socket'
 module RubyXymon
 
 
-  def self.send(msg, this_host=nil, this_port=nil)
+  def self.send_formatted_message(msg, this_host=nil, this_port=nil)
     host = this_host.nil? ? self.config[:host] : this_host
     port = this_port.nil? ? self.config[:port] : this_port
 

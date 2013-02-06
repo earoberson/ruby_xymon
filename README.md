@@ -3,7 +3,7 @@ RubyXymon [![Build Status](https://travis-ci.org/rubyisbeautiful/ruby_xymon.png)
 
 A simple gem for Xymon
 
-Thanks to Greg Faust
+Thanks to Greg Faust, Scott Sayles (codemariner)
 
 ## Installation
 
@@ -40,6 +40,9 @@ For more information on Xymon, see the [![Xymon man page](http://www.xymon.com/x
 Future improvements:
 * methods based on Xymon messages.  Each message has its own syntax, e.g. RubyXymon.status(lifetime, group, hostname, testname, color, txt)
 * methods to read from Xymon, e.g. "query" message
+* update config method to allow multiple configs / multiple servers
+* timeouts
+* swallow errors vs raise error methods (send_formatted_message! vs send_formatted_message)
 
 
 ## Contributing

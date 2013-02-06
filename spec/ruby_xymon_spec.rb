@@ -70,19 +70,19 @@ describe "RubyXymon" do
   end
 
 
-  describe 'send' do
+  describe 'send_formatted_message' do
 
     it 'should use default host if not passed' do
       RubyXymon.should_receive(:new_socket).with('localhost', '1984').and_return(double.as_null_object)
 
-      RubyXymon.send('foo')
+      RubyXymon.send_formatted_message('foo')
     end
 
 
     it 'should use default port if not passed' do
       RubyXymon.should_receive(:new_socket).with('baconhost', '1984').and_return(double.as_null_object)
 
-      RubyXymon.send('foo', 'baconhost')
+      RubyXymon.send_formatted_message('foo', 'baconhost')
     end
 
 
@@ -92,7 +92,7 @@ describe "RubyXymon" do
 
       RubyXymon.stub(:new_socket).and_return(duck)
 
-      RubyXymon.send('foo')
+      RubyXymon.send_formatted_message('foo')
     end
 
   end
