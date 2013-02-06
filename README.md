@@ -3,7 +3,7 @@ RubyXymon [![Build Status](https://travis-ci.org/rubyisbeautiful/ruby_xymon.png)
 
 A simple gem for Xymon
 
-Thanks to Greg Faust, Scott Sayles (codemariner)
+Thanks to Greg Faust, [Scott Sayles](https://github.com/codemariner)
 
 ## Installation
 
@@ -22,18 +22,23 @@ Or install it yourself as:
 ## Usage
 
 In its current state, the gem is simple to use.  You can set two configuration variables, host and port, like this:
-`>> RubyXymon.config[:host] = 'localhost'`
-`>> RubyXymon.config[:port] = '1984'`
+
+    RubyXymon.config[:host] = 'localhost'
+    RubyXymon.config[:port] = '1984'
+
 The values in the example are the defaults.
 You can also set the configuration at once, using either a Hash or a String, which points to a file:
-`>> RubyXymon.config = { :host => 'localhost' }`
-`>> RubyXymon.config = "/some/dir/xymon.yml"`
 
-You can send a raw Xymon message using the send method:
-`>> RubyXymon.send("status www.http green #{Time.zone.now} Web OK")`
+    RubyXymon.config = { :host => 'localhost' }
+    RubyXymon.config = "/some/dir/xymon.yml"
+
+You can send a raw Xymon message using the send_formatted_message method:
+
+    RubyXymon.send_formatted_message("status www.http green #{Time.zone.now} Web OK")
 
 For more information on Xymon, see the [Xymon man page](http://www.xymon.com/xymon/help/manpages/man1/xymon.1.html#lbAF)
 
+The API of sending (and in the near future, reading) messages from Xymon is not defined yet, but it will definitely change.  
 
 ##
 
