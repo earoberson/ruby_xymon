@@ -37,6 +37,7 @@ You can send a raw Xymon message using the send_formatted_message method:
     RubyXymon.send_formatted_message("status www.http green #{Time.zone.now} Web OK")
 
 Now you can send a simple status message above, using params:
+
     RubyXymon.create_formatted_status_message('www', 'http', 'green', additional_text: 'Web OK')
 
 For more information on Xymon, see the [Xymon man page](http://www.xymon.com/xymon/help/manpages/man1/xymon.1.html)
