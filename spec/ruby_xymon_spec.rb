@@ -6,6 +6,14 @@ describe "RubyXymon" do
     RubyXymon.instance_variable_set('@_xymon_config', nil)
   end
 
+  before :all do
+    t = Time.utc(2013, 01, 01, 12, 0, 0)
+    Timecop.freeze(t)
+  end
+
+  after :all do
+    Timecop.return
+  end
 
   describe 'default_config' do
 
@@ -96,6 +104,80 @@ describe "RubyXymon" do
     end
 
   end
+
+
+  describe 'create_formatted_status_message' do
+
+
+    # sanity check
+    it 'should not raise if all params are valid' do
+      expect { RubyXymon.create_formatted_status_message('foo', 'bar', 'green') }.to_not raise_error
+    end
+
+    it 'should raise if the color is not valid' do
+      expect { RubyXymon.create_formatted_status_message('foo', 'bar', 'teal') }.to raise_error RubyXymon::InvalidArgumentError
+    end
+
+    it 'should raise if the test name contains a dot' do
+      expect { RubyXymon.create_formatted_status_message('foo', 'b.r', 'green') }.to raise_error RubyXymon::InvalidArgumentError
+    end
+
+    it 'should set the base text as the current time if not passed' do
+      RubyXymon.create_formatted_status_message('foo', 'bar', 'green').should =~ /2013-01-01 12:00:00 UTC/
+    end
+
+    it 'should use base text if passed' do
+      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', base_text: 'chunky').should =~ /chunky/
+    end
+
+    it 'should add additional text if passed' do
+      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', additional_text: 'bacon').should =~ /bacon/
+    end
+
+    it 'should have 30 as default lifetime' do
+      RubyXymon.create_formatted_status_message('foo', 'bar', 'green').should =~ /^status\+30/
+    end
+
+    it 'should include group is passed' do
+      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', group: 'pager').should =~ /\/pager/
+    end
+
+  end
+
+
+  describe 'format_time_in_seconds' do
+
+    it 'should return 1 for 10 seconds' do
+      RubyXymon.format_time_in_seconds(10).should == '1'
+    end
+
+
+    it 'should return 1 for 60 seconds' do
+      RubyXymon.format_time_in_seconds(60).should == '1'
+    end
+
+
+    it 'should return 5 for 350 seconds' do
+      RubyXymon.format_time_in_seconds(350).should == '5'
+    end
+
+
+    it 'should return 1h for 3600 seconds' do
+      RubyXymon.format_time_in_seconds(3600).should == '1h'
+    end
+
+
+    it 'should return 1d for 86400 seconds' do
+      RubyXymon.format_time_in_seconds(86400).should == '1d'
+    end
+
+
+    it 'should return 1w for 604800 seconds' do
+      RubyXymon.format_time_in_seconds(604800).should == '1w'
+    end
+
+  end
+
 
 
 end
