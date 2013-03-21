@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'simplecov'
 require 'timecop'
+require 'yaml'
 require File.join(File.dirname(__FILE__), '..', 'lib/ruby_xymon')
 
 SimpleCov.start
