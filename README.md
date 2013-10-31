@@ -9,7 +9,7 @@ Thanks to Greg Faust, [Scott Sayles](https://github.com/codemariner)
 
 Add this line to your application's Gemfile:
 
-    gem 'xymon'
+    gem 'ruby_xymon'
 
 And then execute:
 
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install xymon
+    $ gem install ruby_xymon
 
 ## Usage
 
