@@ -1,7 +1,7 @@
-require "ruby_xymon/version"
+require 'ruby_xymon/version'
 require 'socket'
 
-# @note see http://www.xymon.com/xymon/help/manpages/man1/xymon.1.html for the complete Xymon man page
+# @note see http://xymon.sourceforge.net/xymon/help/manpages/man1/xymon.1.html for the complete Xymon man page
 #       that was used to build this
 # @todo internationalize colors
 module RubyXymon
@@ -102,8 +102,8 @@ module RubyXymon
 
   def self.default_config
     {
-      :host => 'localhost',
-      :port => '1984'
+      host: 'localhost',
+      port: '1984'
     }
   end
 
@@ -130,7 +130,6 @@ module RubyXymon
         raise "t should be a number representing an interval in seconds"
     end
   end
-
 
 
 end

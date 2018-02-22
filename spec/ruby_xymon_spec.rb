@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "RubyXymon" do
+describe 'RubyXymon' do
 
   before :each do
     RubyXymon.instance_variable_set('@_xymon_config', nil)
@@ -17,12 +17,12 @@ describe "RubyXymon" do
 
   describe 'default_config' do
 
-    it "should have a port of 1984" do
-      RubyXymon.default_config[:port].should == '1984'
+    it 'should have a port of 1984' do
+      expect(RubyXymon.default_config[:port]).to eq '1984'
     end
 
-    it "should have a host of localhost" do
-      RubyXymon.default_config[:host].should == 'localhost'
+    it 'should have a host of localhost' do
+      expect(RubyXymon.default_config[:host]).to eq 'localhost'
     end
 
   end
@@ -30,8 +30,8 @@ describe "RubyXymon" do
 
   describe 'new_socket' do
 
-    it "should return a TCPSocket" do
-      TCPSocket.should_receive(:new).with('localhost', '1984')
+    it 'should return a TCPSocket' do
+      expect(TCPSocket).to receive(:new).with('localhost', '1984')
 
       RubyXymon.new_socket('localhost', '1984')
     end
@@ -41,18 +41,18 @@ describe "RubyXymon" do
 
   describe 'config' do
 
-    it "should set @_xymon_config if it was nil" do
-      RubyXymon.instance_variable_get("@_xymon_config").nil?.should be_true
+    it 'should set @_xymon_config if it was nil' do
+      expect(RubyXymon.instance_variable_get("@_xymon_config").nil?).to be_truthy
 
       RubyXymon.config
 
-      RubyXymon.instance_variable_get("@_xymon_config").nil?.should be_false
+      expect(RubyXymon.instance_variable_get("@_xymon_config").nil?).to be_falsey
     end
 
-    it "should return @_xymon_config if it was not nil" do
+    it 'should return @_xymon_config if it was not nil' do
       RubyXymon.instance_variable_set("@_xymon_config", 'foo')
 
-      RubyXymon.config.should == 'foo'
+      expect(RubyXymon.config).to eq 'foo'
     end
 
   end
@@ -61,18 +61,18 @@ describe "RubyXymon" do
   describe 'config=' do
 
     it 'should accept a hash and merge it to defaults' do
-      RubyXymon.config = { :host => 'foo' }
+      RubyXymon.config = { host: 'foo' }
 
-      RubyXymon.config.should == { :host => 'foo', :port => '1984' }
+      expect(RubyXymon.config).to eq({ host: 'foo', port: '1984' })
     end
 
 
     it 'should accept a YAML file and merge it to defaults' do
-      YAML.should_receive(:load_file).with('some_file').and_return({ :host => 'foo' })
+      expect(YAML).to receive(:load_file).with('some_file').and_return({ host: 'foo' })
 
       RubyXymon.config = 'some_file'
 
-      RubyXymon.config.should == { :host => 'foo', :port => '1984' }
+      expect(RubyXymon.config).to eq({ host: 'foo', port: '1984' })
     end
 
   end
@@ -81,24 +81,24 @@ describe "RubyXymon" do
   describe 'send_formatted_message' do
 
     it 'should use default host if not passed' do
-      RubyXymon.should_receive(:new_socket).with('localhost', '1984').and_return(double.as_null_object)
+      expect(RubyXymon).to receive(:new_socket).with('localhost', '1984').and_return(double.as_null_object)
 
       RubyXymon.send_formatted_message('foo')
     end
 
 
     it 'should use default port if not passed' do
-      RubyXymon.should_receive(:new_socket).with('baconhost', '1984').and_return(double.as_null_object)
+      expect(RubyXymon).to receive(:new_socket).with('baconhost', '1984').and_return(double.as_null_object)
 
       RubyXymon.send_formatted_message('foo', 'baconhost')
     end
 
 
-    it "the socket should receive the message" do
+    it 'the socket should receive the message' do
       duck = double.as_null_object
-      duck.should_receive(:puts).with('foo')
+      duck.is_expected.to receive(:puts).with('foo')
 
-      RubyXymon.stub(:new_socket).and_return(duck)
+      allow(RubyXymon).to receive(:new_socket).and_return(duck)
 
       RubyXymon.send_formatted_message('foo')
     end
@@ -123,23 +123,23 @@ describe "RubyXymon" do
     end
 
     it 'should set the base text as the current time if not passed' do
-      RubyXymon.create_formatted_status_message('foo', 'bar', 'green').should =~ /2013-01-01 12:00:00 UTC/
+      expect(RubyXymon.create_formatted_status_message('foo', 'bar', 'green')).to match /2013-01-01 12:00:00 UTC/
     end
 
     it 'should use base text if passed' do
-      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', base_text: 'chunky').should =~ /chunky/
+      expect(RubyXymon.create_formatted_status_message('foo', 'bar', 'green', base_text: 'chunky')).to match /chunky/
     end
 
     it 'should add additional text if passed' do
-      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', additional_text: 'bacon').should =~ /bacon/
+      expect(RubyXymon.create_formatted_status_message('foo', 'bar', 'green', additional_text: 'bacon')).to match /bacon/
     end
 
     it 'should have 30 as default lifetime' do
-      RubyXymon.create_formatted_status_message('foo', 'bar', 'green').should =~ /^status\+30/
+      expect(RubyXymon.create_formatted_status_message('foo', 'bar', 'green')).to match /^status\+30/
     end
 
     it 'should include group is passed' do
-      RubyXymon.create_formatted_status_message('foo', 'bar', 'green', group: 'pager').should =~ /\/pager/
+      expect(RubyXymon.create_formatted_status_message('foo', 'bar', 'green', group: 'pager')).to match /\/pager/
     end
 
   end
@@ -148,36 +148,35 @@ describe "RubyXymon" do
   describe 'format_time_in_seconds' do
 
     it 'should return 1 for 10 seconds' do
-      RubyXymon.format_time_in_seconds(10).should == '1'
+      expect(RubyXymon.format_time_in_seconds(10)).to eq '1'
     end
 
 
     it 'should return 1 for 60 seconds' do
-      RubyXymon.format_time_in_seconds(60).should == '1'
+      expect(RubyXymon.format_time_in_seconds(60)).to eq '1'
     end
 
 
     it 'should return 5 for 350 seconds' do
-      RubyXymon.format_time_in_seconds(350).should == '5'
+      expect(RubyXymon.format_time_in_seconds(350)).to eq '5'
     end
 
 
     it 'should return 1h for 3600 seconds' do
-      RubyXymon.format_time_in_seconds(3600).should == '1h'
+      expect(RubyXymon.format_time_in_seconds(3600)).to eq '1h'
     end
 
 
     it 'should return 1d for 86400 seconds' do
-      RubyXymon.format_time_in_seconds(86400).should == '1d'
+      expect(RubyXymon.format_time_in_seconds(86400)).to eq '1d'
     end
 
 
     it 'should return 1w for 604800 seconds' do
-      RubyXymon.format_time_in_seconds(604800).should == '1w'
+      expect(RubyXymon.format_time_in_seconds(604800)).to eq '1w'
     end
 
   end
-
 
 
 end

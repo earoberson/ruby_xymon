@@ -40,7 +40,7 @@ Now you can send a simple status message above, using params:
 
     RubyXymon.create_formatted_status_message('www', 'http', 'green', additional_text: 'Web OK')
 
-For more information on Xymon, see the [Xymon man page](http://www.xymon.com/xymon/help/manpages/man1/xymon.1.html)
+For more information on Xymon, see the [Xymon man page](http://xymon.sourceforge.net/xymon/help/manpages/man1/xymon.1.html)
 
 The API of sending (and in the near future, reading) messages from Xymon is not defined yet, but it will definitely change.  
 
